@@ -1,0 +1,6 @@
+html.dark {
+    color-scheme: normal;
+    --ep-border-color: #363636;
+    /* --ep-font-size-base: 13px; */
+    background-color: var(--ep-bg-color-page);
+}

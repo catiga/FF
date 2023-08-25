@@ -1,10 +1,10 @@
 <script setup>
-import { toggleDark } from "~/composables";
+// import { toggleDark } from "~/composables";
 </script>
 
 <template>
   <section class="header-container flex items-center gap-x-3" style="height: var(--ep-menu-item-height)">
-    <img class="w-4 border" src="/vite.svg" alt="vite">
+    <img class="w-36 border" src="/logo.jpg" alt="vite">
     <div class="flex-grow" />
     <i inline-flex i="ep-search"></i>
     <i inline-flex i="ep-question-filled"></i>

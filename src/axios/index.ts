@@ -1,10 +1,9 @@
 import axios from "axios";
 
-console.log('import.meta.env.VITE_BASE_URL::', import.meta.env.VITE_BASE_URL)
 // create an axios instance
 const service = axios.create({
-  baseURL: import.meta.env.VITE_BASE_URL, // url = base url + request url
-  timeout: 60000, // request timeout
+  baseURL: import.meta.env.VITE_BASE_URL,
+  timeout: 60000, 
   transformRequest: [function (data, headers) {
     return data;
   }],

@@ -216,6 +216,9 @@ const goBack = () => {
                 & + .chat-item {
                     margin-top: 12px;
                 }
+                > img {
+                    aspect-ratio: 1 / 1;
+                }
             }
             .chat-v {
                 font-size: 14px;

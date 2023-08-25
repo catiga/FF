@@ -20,7 +20,7 @@
     <section class="roles-wrapper mt-3">
       <section class="role-box pb-5">
         <div @click="gotoChat(item)" class="role-item p-4 rounded-[0.6rem] flex-shrink-0" v-for="(item,index) in characters" :key="index">
-          <img class="w-[8.5rem] rounded-[0.6rem]" :src="item.avatar" />
+          <img class="role-avatar w-[8.5rem] rounded-[0.6rem]" :src="item.avatar" />
           <dl>
             <dt>{{item.name}}</dt>
             <dd>{{item.info}}</dd>
@@ -208,6 +208,10 @@ const gotoChat = (e) => {
       & + .role-item {
         margin-left: 10px;
       }
+    }
+
+    .role-avatar {
+      aspect-ratio: 1 / 1;
     }
   }
 }

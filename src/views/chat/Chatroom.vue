@@ -25,8 +25,8 @@
                 </section>
                 <section class="mt-4" v-html="charObj.profile"></section>
             </div>
-            <div class="chatroom flex-1 h-full p-4 rounded-sm">
-                <div class="chat-content">
+            <div class="chatroom flex-1 h-full rounded-sm">
+                <div class="chat-content p-4" ref="chatroomContent">
                     <section 
                         v-for="item,index in chatObj.list" 
                         :key="index" 
@@ -39,7 +39,7 @@
                 <el-input
                     v-model="inputValue"
                     placeholder="输入你的问题叭"
-                    class="input-with-select"
+                    class="input-with-select m-4"
                 >
                     <template #append>
                         <el-button @click="handleSend" type="primary">发送</el-button>
@@ -56,6 +56,8 @@ import {
 } from "~/api/index";
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router';
+
+const chatroomContent = ref(null)
 
 const router = useRouter()
 const route = useRoute()
@@ -130,6 +132,11 @@ const goBack = () => {
         } else {
             reMsg.content += ret.Data.Content
         }
+        // 滚动条位置
+        chatroomContent.value.scrollTo({ 
+            top: chatroomContent.value.scrollTop + chatroomContent.value.clientHeight, 
+            behavior: 'smooth'
+        })
     }
   }
 
@@ -212,6 +219,7 @@ const goBack = () => {
 
         .chat-content {
             flex: 1;
+            overflow-y: scroll;
             .chat-item {
                 & + .chat-item {
                     margin-top: 12px;

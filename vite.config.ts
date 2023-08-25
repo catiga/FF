@@ -66,8 +66,8 @@ export default defineConfig({
     host: '0.0.0.0',
     proxy: {
       '/rpc': {
-        target: 'http://localhost:18080/',
-        // target: 'https://rp.fenus.xyz/',
+        // target: 'http://localhost:18080/',
+        target: 'https://rp.fenus.xyz',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/rpc/, ''),
       },

@@ -80,7 +80,7 @@
 <script setup>
 import {
     characterList
-} from "@/api/index";
+} from "~/api/index";
 import { reactive, onMounted, ref } from "vue";
 import { useRouter } from 'vue-router';
 import AssistantImg from '~/assets/images/assistant.jpg';

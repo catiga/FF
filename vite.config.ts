@@ -69,7 +69,7 @@ export default defineConfig({
         // target: 'http://localhost:18080/',
         target: 'https://rp.fenus.xyz',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/rpc/, ''),
+        // rewrite: (path) => path.replace(/^\/rpc/, ''),
       },
     },
   },

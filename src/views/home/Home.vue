@@ -19,19 +19,15 @@
     <!-- 角色列表 -->
     <section class="roles-wrapper mt-3">
       <section class="role-box pb-5">
-        <div @click="gotoChat" class="role-item p-4 rounded-[0.6rem] flex-shrink-0" v-for="item,index in 12">
-          <img class="w-[8.5rem] rounded-[0.6rem]" :src="index == 0 ? AssistantImg : AvatarImg" />
-          <dl v-if="index == 0">
-            <dt>角色助理</dt>
-            <dd>您的AI工作/学习伙伴</dd>
-          </dl>
-          <dl v-else>
-            <dt>仙妖</dt>
-            <dd>上古神兽炒鸡好看，上古神兽炒鸡好看，上古神兽炒鸡好看，上古神兽炒鸡好看</dd>
+        <div @click="gotoChat(item)" class="role-item p-4 rounded-[0.6rem] flex-shrink-0" v-for="(item,index) in characters" :key="index">
+          <img class="w-[8.5rem] rounded-[0.6rem]" :src="item.avatar" />
+          <dl>
+            <dt>{{item.name}}</dt>
+            <dd>{{item.info}}</dd>
           </dl>
           <p class="text-xs w-full mt-4 mb-0 flex items-center justify-between">
-            <span class="flex-1 truncate max-w-[8rem] text-left italic">@xiangguaa</span>
-            <span class="flex items-center"><img class="w-4" src="../../assets/images/icon/icon-ad.png" alt=""> 40.0m</span>
+            <span class="flex-1 truncate max-w-[8rem] text-left italic">@{{item.place}}</span>
+            <span class="flex items-center"><img class="w-4" src="../../assets/images/icon/icon-ad.png" alt=""> {{item.age}}</span>
           </p>
         </div>
       </section>
@@ -89,9 +85,24 @@ import AvatarImg from '~/assets/images/role.jpg';
 const navObj = reactive({navList: []})
 const nav = ref(null)
 const router = useRouter()
+const characters = ref([
+  {
+    id: 0,
+    name: "角色助理",
+    info: "您的AI工作/学习伙伴",
+    avatar: AssistantImg,
+    place: "",
+    age: "",
+  }
+])
 
 onMounted(() => {
   navObj.navList = ['特色', '发现', '助手', '名人', '游戏', '图像生成','特色', '发现', '助手', '名人', '游戏', '图像生成','特色', '发现', '助手', '名人', '游戏', '图像生成']
+
+  characterList("cece").then(v => {
+    characters.value.splice(1, v.Data?.length, ...v.Data)
+    console.log(characters)
+  })
 })
 
 const checkIndex = ref(0)
@@ -102,15 +113,18 @@ const handleScroll = () => {
     nav.value.scrollTo({ left: nav.value.scrollWidth, behavior: 'smooth'})
 }
 
-const gotoChat = () => {
+const gotoChat = (e) => {
+  if(e.id==0) {
+    return
+  }
+  console.log(e)
   router.push({
     name: 'chat',
     params: {
-      chatid: '1'
+      chatid: e.code
     }
   })
 }
-characterList("cece")
 
 
 

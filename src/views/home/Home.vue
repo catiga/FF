@@ -78,6 +78,8 @@
 </template>
 
 <script setup>
+import axios from 'axios'
+import qs from 'qs'
 import { reactive, onMounted, ref } from "vue";
 import { useRouter } from 'vue-router';
 import AssistantImg from '~/assets/images/assistant.jpg';
@@ -107,6 +109,8 @@ const gotoChat = () => {
     }
   })
 }
+
+
 
 </script>
 

@@ -4,24 +4,24 @@
     class="el-menu-vertical"
     :collapse="isCollapse"
   >
-    <div class="memu" index="1">
-      <el-icon><icon-menu /></el-icon>
+    <router-link to="/home" class="memu" index="1">
+      <img class="w-6 block" src="../../assets/images/icon/icon-home.png" alt="">
       <span>首页</span>
-    </div>
+    </router-link>
     <div class="memu" index="2">
-      <el-icon><icon-menu /></el-icon>
+      <img class="w-5 block" src="../../assets/images/icon/icon-trending.png" alt="">
       <span>动态</span>
     </div>
     <div class="memu">
-      <el-icon><icon-menu /></el-icon>
+      <img class="w-3 block" src="../../assets/images/icon/icon-create.png" alt="">
       <span>创建</span>
     </div>
     <div class="memu">
-      <el-icon><icon-menu /></el-icon>
+      <img class="w-5 block" src="../../assets/images/icon/icon-chat.png" alt="">
       <span>聊天</span>
     </div>
     <div class="memu">
-      <el-icon><icon-menu /></el-icon>
+      <img class="w-5 block" src="../../assets/images/icon/icon-community.png" alt="">
       <span>社区</span>
     </div>
 
@@ -55,11 +55,13 @@ const handleClose = (key: string, keyPath: string[]) => {
     display: flex;
     align-items: center;
     flex-direction: column;
+    color: #fff;
+    text-decoration: none;
     // color: var(--ep-menu-active-color);
     padding: calc(var(--ep-menu-base-level-padding) / 2)  0;
     cursor: pointer;
     > span {
-      font-size: var(--ep-font-size-base);
+      font-size: 12px;
       margin-top: 4px;
     }
     &:hover {

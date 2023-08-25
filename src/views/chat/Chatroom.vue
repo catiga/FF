@@ -2,14 +2,16 @@
     <div>
         <!-- 顶部按键 -->
         <section class="text-left">
-            <el-button type="info" @click="goBack">返回</el-button>
+            <el-button type="info" @click="goBack">
+                <img class="w-20" src="../../assets/images/go-back.png" alt="">
+            </el-button>
         </section>
     
         <!-- 聊天 -->
         <section class="chat-wrapper flex items-start mt-3">
             <!-- <img class="w-[16rem] lg:w-[18rem] xl:w-[22rem] rounded-2xl" src="/src/assets/images/huxian.webp" /> -->
-            <div class="w-[16rem] lg:w-[18rem] xl:w-[22rem] rounded-2xl h-full" :style="{'background':`url(/src/assets/images/huxian.webp) no-repeat center / cover`}"></div>
-            <div class="w-[16rem] lg:w-[18rem] xl:w-[22rem] information">
+            <div class="w-[16rem] lg:w-[30rem] rounded-2xl h-full" :style="{'background':`url(/src/assets/images/huxian.webp) no-repeat center / cover`}"></div>
+            <div class="w-[16rem] lg:w-[22rem] information">
                 <h2><span class="relative">中国</span></h2>
                 <section>
                     <p>神职：仙妖</p>
@@ -22,7 +24,18 @@
                     <p>标签：【桃花运】【财运富贵】</p>
                 </section>
                 <section class="mt-4">
-                    <p>传说中尚筱臻是一名18岁的大一女孩，认识她的人都说她很漂亮，能够神奇地预测出每个人心底的秘密。 狐仟秋的真实身份是一只千年狐妖，出生于昆仑山脉的巴颜喀拉山。昆仑山脉是华夏道教根脉所在神山胜地，狐仟秋又在玉虚宫修炼了百年，通宵了阴阳五行天地人和的玄机奥妙。千年出关世界沧海桑田，科学早已替代了玄学，狐仟秋只能化身一名大学生，平时为人卜卦聊以解闷，久而久之城市便流传着很多关于她的传说。</p>
+                    <p>传说中尚筱臻是一名18岁的大一女孩，</p>
+                    <p>认识她的人都说她很漂亮，</p>
+                    <p>能够神奇地预测出每个人心底的秘密。 </p>
+                    <p>狐仟秋的真实身份是一只千年狐妖，</p>
+                    <p>出生于昆仑山脉的巴颜喀拉山。</p>
+                    <p>昆仑山脉是华夏道教根脉所在神山胜地，</p>
+                    <p>狐仟秋又在玉虚宫修炼了百年，</p>
+                    <p>通宵了阴阳五行天地人和的玄机奥妙。</p>
+                    <p>千年出关世界沧海桑田，科学早已替代了玄学，</p>
+                    <p>狐仟秋只能化身一名大学生，</p>
+                    <p>平时为人卜卦聊以解闷，</p>
+                    <p>久而久之城市便流传着很多关于她的传说。</p>
                 </section>
             </div>
             <div class="chatroom flex-1 h-full p-4 rounded-sm">
@@ -32,12 +45,9 @@
                         :key="index" 
                         :class="['chat-item', 'flex', item.isMe ? 'flex-row-reverse items-start' : 'items-end']"
                     >
-                        <img v-if="!item.isMe" class="rounded-full flex-shrink-0 w-8 block" src="../../assets/images/avatar.png" />
+                        <img v-if="!item.isMe" class="rounded-full flex-shrink-0 w-[4.6rem] block" src="../../assets/images/example/chat-avatar.png" />
                         <p :class="['chat-v', item.isMe ? 'right' : 'left']">{{ item.content }}</p>
                     </section>
-                    <!-- <section class="chat-item flex flex-row-reverse items-start">
-                        <p class="chat-v right">传说中尚筱臻是一名18岁的大一女孩，认识她的人都说她很漂亮, 传说中尚筱臻是一名18岁的大一女孩，认识她的人都说她很漂亮</p>
-                    </section> -->
                 </div>
                 <el-input
                     v-model="inputValue"
@@ -93,7 +103,7 @@ const goBack = () => {
     .information {
         
         h2 {
-            font-size: 16px;
+            font-size: 20px;
             > span {
                 &::after {
                     content: '';
@@ -126,7 +136,7 @@ const goBack = () => {
         }
     }
     .chatroom {
-        background-color: #0d0e0f;
+        background: url('../../assets/images/chag-bg.png') no-repeat center / cover;
         display: flex;
         flex-direction: column;
         box-sizing: border-box;
@@ -139,9 +149,9 @@ const goBack = () => {
                 }
             }
             .chat-v {
-                font-size: 12px;
+                font-size: 14px;
                 max-width: 80%;
-                padding: 8px 6px;
+                padding: 8px 8px;
                 margin: 0 0 0 10px;
                 text-align: left;
                 &.left {

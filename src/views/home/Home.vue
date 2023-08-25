@@ -19,15 +19,19 @@
     <!-- 角色列表 -->
     <section class="roles-wrapper mt-3">
       <section class="role-box pb-5">
-        <div @click="gotoChat" class="role-item p-4 rounded-[0.6rem] flex-shrink-0" v-for="item in 12">
-          <img class="w-[8.5rem] rounded-[0.6rem]" src="../../assets/images/role.png" />
-          <dl>
+        <div @click="gotoChat" class="role-item p-4 rounded-[0.6rem] flex-shrink-0" v-for="item,index in 12">
+          <img class="w-[8.5rem] rounded-[0.6rem]" :src="index == 0 ? AssistantImg : AvatarImg" />
+          <dl v-if="index == 0">
+            <dt>角色助理</dt>
+            <dd>您的AI工作/学习伙伴</dd>
+          </dl>
+          <dl v-else>
             <dt>仙妖</dt>
             <dd>上古神兽炒鸡好看，上古神兽炒鸡好看，上古神兽炒鸡好看，上古神兽炒鸡好看</dd>
           </dl>
           <p class="text-xs w-full mt-4 mb-0 flex items-center justify-between">
             <span class="flex-1 truncate max-w-[8rem] text-left italic">@xiangguaa</span>
-            <span>40.0m</span>
+            <span class="flex items-center"><img class="w-4" src="../../assets/images/icon/icon-ad.png" alt=""> 40.0m</span>
           </p>
         </div>
       </section>
@@ -40,7 +44,7 @@
       <section class="show-box pb-5">
         <div class="show-item flex-shrink-0" v-for="item in 8">
           <div class="avatar flex items-center">
-            <img class="w-12 rounded-md" src="../../assets/images/avatar.png" />
+            <img class="w-12 rounded-md" src="../../assets/images/example/01.png" />
             <div class="ml-2">
               <h2>Elon Musk</h2>
               <h2 class="italic">Try saying:</h2>
@@ -65,7 +69,7 @@
     <section class="flex flex-col items-center py-8">
       <section class="type-wapper grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
         <section class="type-item flex items-center p-1" v-for="item in 9">
-          <img class="w-8 block rounded-sm" src="../../assets/images/avatar.png" />
+          <img class="w-8 block rounded-sm" src="../../assets/images/example/02.png" />
           <p class="ml-2 my-0">Brainstorm ideas</p>
         </section>
       </section>
@@ -76,14 +80,15 @@
 <script setup>
 import { reactive, onMounted, ref } from "vue";
 import { useRouter } from 'vue-router';
+import AssistantImg from '~/assets/images/assistant.jpg';
+import AvatarImg from '~/assets/images/role.jpg';
+
 const navObj = reactive({navList: []})
 const nav = ref(null)
 const router = useRouter()
 
 onMounted(() => {
-  navObj.navList = [
-    '特色', '发现', '助手', '名人', '游戏', 'tuxiangshengcheng','特色', '发现', '助手', '名人', '游戏', 'tuxiangshengcheng','特色', '发现', '助手', '名人', '游戏', 'tuxiangshengcheng',
-  ]
+  navObj.navList = ['特色', '发现', '助手', '名人', '游戏', '图像生成','特色', '发现', '助手', '名人', '游戏', '图像生成','特色', '发现', '助手', '名人', '游戏', '图像生成']
 })
 
 const checkIndex = ref(0)
@@ -141,7 +146,7 @@ const gotoChat = () => {
   color: #c9c5bf;
   .role-box {
     display: flex;
-    align-items: center;
+    // align-items: center;
     box-sizing: border-box;
     overflow-x: scroll;
 
@@ -173,6 +178,7 @@ const gotoChat = () => {
         margin-top: 14px;
         text-align: left;
         overflow : hidden;
+        height: 40px;
         text-overflow: ellipsis;
         display: -webkit-box;
         -webkit-line-clamp: 2;

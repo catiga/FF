@@ -4,10 +4,11 @@
 
 <template>
   <section class="header-container flex items-center gap-x-3" style="height: var(--ep-menu-item-height)">
-    <img class="w-36 border" src="/logo.jpg" alt="vite">
+    <img class="w-[12.5rem] border" src="/logo.jpg" alt="vite">
     <div class="flex-grow" />
-    <i inline-flex i="ep-search"></i>
-    <i inline-flex i="ep-question-filled"></i>
+    <img class="w-7 block" src="../../assets/images/icon/icon-search.png" alt="">
+    <img class="w-7 block" src="../../assets/images/icon/icon-book.png" alt="">
+    <img class="w-6 block" src="../../assets/images/icon/icon-question.png" alt="">
     <el-dropdown cursor-pointer>
       <span class="el-dropdown-link">
         中文

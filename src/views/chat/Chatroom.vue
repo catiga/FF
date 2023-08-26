@@ -98,14 +98,14 @@ const goBack = () => {
 
 //ws
 //   const wsUri = 'ws://localhost:18080/spwapi/ws'
-  const wsUri = 'wss://rp.fenus.xyz/rpc/spwapi/ws'
+  const wsUri = 'wss://tao.fenus.xyz/rpc/spwapi/ws'
   const ws = new WebSocket(wsUri)
 
   ws.onopen = () => {
     console.log('WebSocket is connected.')
     setInterval(() => {
       ws.send('ping')
-    }, 1000 * 60 * 5)
+    }, 1000 * 5)
   }
 
   ws.onmessage = (event) => {

@@ -26,3 +26,16 @@ export function characterByCode(code) {
     data: qs.stringify({lan: lanEnv, code: code}),
   });
 }
+
+export function chatHistory(devId, data) {
+  return service({
+    url: "/spwapi/user/chat/history",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      "lan": lanEnv,
+      "devid": devId
+    },
+    method: "post",
+    data: qs.stringify(data),
+  });
+}

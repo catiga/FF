@@ -52,13 +52,15 @@
 
 <script setup>
 import {
-    characterByCode
+    characterByCode,
+    chatHistory
 } from "~/api/index";
 import {
     SpwsClient
 } from "~/api/ws";
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router';
+import FingerprintJS from '@fingerprintjs/fingerprintjs';
 
 const chatroomContent = ref(null)
 
@@ -68,13 +70,34 @@ const inputValue = ref('')
 const sending = ref(false)
 
 const charObj = ref({})
+let devId = ''
 
-onMounted(() => {
+onMounted(async () => {
     characterByCode(route.params.chatid).then(v => {
         if(v.Code==0) {
             charObj.value = v.Data
         } else {
             console.log('error:', v)
+        }
+    })
+    const fp = await FingerprintJS.load();
+    const result = await fp.get();
+    console.log("dev code：", result.visitorId) //1cde4f14791e85cd9765bb45f26a34cc
+    devId = result.visitorId
+
+    chatHistory(devId, {}).then(v => {
+        console.log("获取历史结果：", v)
+        if(v.Code == 0 && v.Data?.length > 0) {
+            chatObj.list.splice(0, chatObj.list.length, ...[])
+            for(let e of v.Data) {
+                chatObj.list.push({
+                    id: e.id,
+                    timestamp: e.time,
+                    content: e.content,
+                    isMe : (e.direction == '1' ? true : false),
+                })
+            }
+            console.log("重构数据：", chatObj)
         }
     })
 })
@@ -103,7 +126,6 @@ const goBack = () => {
 //ws
 //   const wsUri = 'ws://localhost:18080/spwapi/ws'
   const wsUri = 'wss://tao.fenus.xyz/rpc/spwapi/ws'
-//   var ws = new WebSocket(wsUri)
   var ws = new SpwsClient(wsUri)
 
   ws.setOnMessageCallback((event) => {
@@ -154,6 +176,8 @@ const goBack = () => {
       lan: "zh-CN",
       ascode: charObj.value.code,
       timestamp: Date.now(),
+      userid: 0,
+      devid: devId,
       data: inputMsg,
     }
     ws.send(JSON.stringify(d))

@@ -42,7 +42,7 @@
                     class="input-with-select m-4"
                 >
                     <template #append>
-                        <el-button @click="handleSend" type="primary">发送</el-button>
+                        <el-button @click="handleSend" type="primary" :loading="sending" :disabled="sending">发送</el-button>
                     </template>
                 </el-input>
             </div>
@@ -54,6 +54,9 @@
 import {
     characterByCode
 } from "~/api/index";
+import {
+    SpwsClient
+} from "~/api/ws";
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router';
 
@@ -62,6 +65,7 @@ const chatroomContent = ref(null)
 const router = useRouter()
 const route = useRoute()
 const inputValue = ref('')
+const sending = ref(false)
 
 const charObj = ref({})
 
@@ -99,19 +103,13 @@ const goBack = () => {
 //ws
 //   const wsUri = 'ws://localhost:18080/spwapi/ws'
   const wsUri = 'wss://tao.fenus.xyz/rpc/spwapi/ws'
-  const ws = new WebSocket(wsUri)
+//   var ws = new WebSocket(wsUri)
+  var ws = new SpwsClient(wsUri)
 
-  ws.onopen = () => {
-    console.log('WebSocket is connected.')
-    setInterval(() => {
-      ws.send('ping')
-    }, 1000 * 5)
-  }
-
-  ws.onmessage = (event) => {
+  ws.setOnMessageCallback((event) => {
     const message = event.data
     if (message == 'pong') {
-      return
+        return
     }
     let ret = JSON.parse(message)
     if(ret.Code==0) {
@@ -138,20 +136,11 @@ const goBack = () => {
             behavior: 'smooth'
         })
     }
-  }
-
-  ws.onerror = (error) => {
-    console.error('WebSocket Error:', error)
-  }
-
-  ws.onclose = (event) => {
-    if (event.wasClean) {
-      console.log(`Closed cleanly, code=${event.code}, reason=${event.reason}`)
-    } else {
-      console.error('Connection died')
-    }
-  }
+    sending.value = false
+  })
+  
   const handleSend = () => {
+    sending.value = true
     const inputMsg = inputValue.value
     chatObj.list.push({
         id: Date.now(),

@@ -3,7 +3,6 @@ import qs from 'qs';
 
 const lanEnv = 'zh-CN'
 
-// 邮箱登录
 export function characterList(data) {
     return service({
       url: "/spwapi/user/character",

@@ -85,8 +85,7 @@ onMounted(async () => {
     console.log("dev code：", result.visitorId) //1cde4f14791e85cd9765bb45f26a34cc
     devId = result.visitorId
 
-    chatHistory(devId, {}).then(v => {
-        console.log("获取历史结果：", v)
+    chatHistory(devId, {userid:0, code: route.params.chatid}).then(v => {
         if(v.Code == 0 && v.Data?.length > 0) {
             chatObj.list.splice(0, chatObj.list.length, ...[])
             for(let e of v.Data) {
@@ -97,7 +96,6 @@ onMounted(async () => {
                     isMe : (e.direction == '1' ? true : false),
                 })
             }
-            console.log("重构数据：", chatObj)
         }
     })
 })

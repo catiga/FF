@@ -88,8 +88,8 @@ const router = useRouter()
 const characters = ref([
   {
     id: 0,
-    name: "角色助理",
-    info: "您的AI工作/学习伙伴",
+    name: "专属占卜师",
+    info: "快来定制你的专属占卜师吧",
     avatar: AssistantImg,
     place: "",
     age: "",

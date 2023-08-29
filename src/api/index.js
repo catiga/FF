@@ -33,7 +33,7 @@ export function chatHistory(devId, data) {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
       "lan": lanEnv,
-      "devid": devId
+      "Devid": devId
     },
     method: "post",
     data: qs.stringify(data),

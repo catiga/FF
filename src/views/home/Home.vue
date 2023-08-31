@@ -101,7 +101,6 @@ onMounted(() => {
 
   characterList("cece").then(v => {
     characters.value.splice(1, v.Data?.length, ...v.Data)
-    console.log(characters)
   })
 })
 

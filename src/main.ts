@@ -3,6 +3,7 @@ import App from "./App.vue";
 import { setupRouter } from "./router/index";
 import { setupAssets } from './plugins/index';
 import { setupAxios } from './axios/index';
+import { serupStore } from './store/index';
 import AppLoading from './components/AppLoading.vue';
 
 async function setupApp() {
@@ -15,6 +16,9 @@ async function setupApp() {
 
     
     const app = createApp(App);
+
+    // store
+    serupStore(app);
     
     // axios
     setupAxios(app);

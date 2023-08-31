@@ -1,17 +1,40 @@
 <template>
-    <div>
+    <div :class="[app.isMobile ? 'room-mobile' : '']" class="relative">
         <!-- 顶部按键 -->
         <section class="text-left">
             <el-button type="info" @click="goBack">
                 <img class="w-20" src="../../assets/images/go-back.png" alt="">
             </el-button>
         </section>
+
+        <!-- 移动端 - 人物图 -->
+        <div class="mobile-person" v-if="app.isMobile && !showChat" :style="{'background':`url(${charObj.bodyImg}) no-repeat center / cover`}">
+            <section class="mb-auto text-right">
+                <section class="flex items-center w-full p-2 switch-btn">
+                    <img @click="goBack" class="w-20" src="../../assets/images/go-back.png" alt="">
+                    <div class="ml-auto" @click="handleHiddenIntro">{{hiddenIntro ? '显示介绍' : '隐藏介绍'}}</div>
+                </section>
+                <el-button @click="handleSwitchChat" class="mt-4" type="primary">去对话</el-button>
+            </section>
+            <div v-show="!hiddenIntro">
+                <section>
+                    <p>神职：仙妖</p>
+                    <p>姓名：{{charObj.name}}</p>
+                    <p>性别：{{charObj.gender}}</p>
+                    <p>年龄：19岁</p>
+                    <p>世纪年龄：{{charObj.age}}</p>
+                    <p>出生日期：{{charObj.birth}}</p>
+                    <p>出生地址：{{charObj.place}}</p>
+                    <p>标签：【桃花运】【财运富贵】</p>
+                </section>
+                <section class="mt-4" v-html="charObj.profile"></section>
+            </div>
+        </div>
     
         <!-- 聊天 -->
-        <section class="chat-wrapper flex items-start mt-3">
-            <!-- <img class="w-[16rem] lg:w-[18rem] xl:w-[22rem] rounded-2xl" src="/src/assets/images/huxian.webp" /> -->
-            <div class="w-[16rem] lg:w-[30rem] rounded-2xl h-full" :style="{'background':`url(${charObj.bodyImg}) no-repeat center / cover`}"></div>
-            <div class="w-[16rem] lg:w-[22rem] information">
+        <section class="chat-wrapper flex items-start pt-3">
+            <div v-if="!app.isMobile" class="w-[16rem] lg:w-[30rem] rounded-2xl h-full" :style="{'background':`url(${charObj.bodyImg}) no-repeat center / cover`}"></div>
+            <div class="w-[16rem] lg:w-[22rem] information" v-if="!app.isMobile">
                 <h2><span class="relative">{{charObj.region}}</span></h2>
                 <section>
                     <p>神职：仙妖</p>
@@ -25,7 +48,7 @@
                 </section>
                 <section class="mt-4" v-html="charObj.profile"></section>
             </div>
-            <div class="chatroom flex-1 h-full rounded-sm">
+            <div v-if="showChat" class="chatroom flex-1 h-full rounded-sm">
                 <div class="chat-content p-4" ref="chatroomContent">
                     <section 
                         v-for="item,index in chatObj.list" 
@@ -36,15 +59,17 @@
                         <p :class="['chat-v', item.isMe ? 'right' : 'left']">{{ item.content }}</p>
                     </section>
                 </div>
-                <el-input
-                    v-model="inputValue"
-                    placeholder="输入你的问题叭"
-                    class="input-with-select m-4"
-                >
-                    <template #append>
-                        <el-button @click="handleSend" type="primary" :loading="sending" :disabled="sending">发送</el-button>
-                    </template>
-                </el-input>
+                <div class="m-4">
+                    <el-input
+                        v-model="inputValue"
+                        placeholder="输入你的问题叭"
+                        class="input-with-select"
+                    >
+                        <template #append>
+                            <el-button @click="handleSend" type="primary" :loading="sending" :disabled="sending">发送</el-button>
+                        </template>
+                    </el-input>
+                </div>
             </div>
         </section>
     </div>
@@ -60,8 +85,10 @@ import {
 } from "~/api/ws";
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router';
+import { useStore } from '~/store';
 import FingerprintJS from '@fingerprintjs/fingerprintjs';
 
+const app = useStore()
 const chatroomContent = ref(null)
 
 const router = useRouter()
@@ -187,11 +214,49 @@ const goBack = () => {
     ws.send(JSON.stringify(d))
   }
 
+    // 界面交互处理
+
+    const hiddenIntro = ref(false)
+    const handleHiddenIntro = () => {
+        hiddenIntro.value = !hiddenIntro.value
+    }
+
+    const showChat = ref(false)
+    const handleSwitchChat = () => {
+        showChat.value = !showChat.value
+    }
+
 </script>
 
 <style lang="scss">
+.room-mobile {
+    
+}
+.mobile-person {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    font-size: 12px;
+    text-align: left;
+    p {
+        margin: 5px 0;
+        text-indent: 8px;
+        text-shadow: 0 0 8px rgba(0,0,0,.8);
+    }
+    .switch-btn {
+        box-sizing: border-box;
+    }
+}
 .chat-wrapper {
-    height: calc(100vh - var(--ep-menu-item-height) - 82px);
+    height: calc(100vh - var(--ep-menu-item-height) - 44px);
+    box-sizing: border-box;
 
     .information {
         
@@ -233,6 +298,10 @@ const goBack = () => {
         display: flex;
         flex-direction: column;
         box-sizing: border-box;
+
+        &.chatroom-mobile {
+            opacity: 0;
+        }
 
         .chat-content {
             flex: 1;

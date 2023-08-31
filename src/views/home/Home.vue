@@ -17,20 +17,25 @@
     </section>
   
     <!-- 角色列表 -->
-    <section class="roles-wrapper mt-3">
-      <section class="role-box pb-5">
-        <div @click="gotoChat(item)" class="role-item p-4 rounded-[0.6rem] flex-shrink-0" v-for="(item,index) in characters" :key="index">
-          <img class="role-avatar w-[8.5rem] rounded-[0.6rem]" :src="item.avatar" />
+    <section class="role-box grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 2xl:grid-cols-8 xl3grid-cols-9 gap-3 mt-4">
+      <div 
+        @click="gotoChat(item)" 
+        class="role-item p-4 rounded-[0.6rem]" 
+        v-for="(item,index) in characters" :key="index"
+        :class="[app.isMobile ? 'mobile' : '']"
+      >
+        <div class="avatar-box">
+          <div class="role-avatar rounded-[0.6rem]" :style="{'background': 'url('+ item.avatar +') no-repeat center/100%'}"></div>
           <dl>
             <dt>{{item.name}}</dt>
             <dd>{{item.info}}</dd>
           </dl>
-          <p class="text-xs w-full mt-4 mb-0 flex items-center justify-between">
-            <span class="flex-1 truncate max-w-[8rem] text-left italic">@{{item.place}}</span>
-            <span class="flex items-center"><img class="w-4" src="../../assets/images/icon/icon-ad.png" alt=""> {{item.age}}</span>
-          </p>
         </div>
-      </section>
+        <p class="text-xs w-full mt-4 mb-0 flex items-center justify-between">
+          <span class="flex-1 truncate max-w-[8rem] text-left italic">@{{item.place}}</span>
+          <span class="flex items-center"><img class="w-4" src="../../assets/images/icon/icon-ad.png" alt=""> {{item.age}}</span>
+        </p>
+      </div>
     </section>
   
     <el-divider />
@@ -77,10 +82,11 @@
 import {
     characterList
 } from "~/api/index";
-import { reactive, onMounted, ref } from "vue";
+import { reactive, onMounted, ref, } from "vue";
 import { useRouter } from 'vue-router';
+import { useStore } from '~/store';
 import AssistantImg from '~/assets/images/assistant.jpg';
-import AvatarImg from '~/assets/images/role.jpg';
+const app = useStore()
 
 const navObj = reactive({navList: []})
 const nav = ref(null)
@@ -101,7 +107,6 @@ onMounted(() => {
 
   characterList("cece").then(v => {
     characters.value.splice(1, v.Data?.length, ...v.Data)
-    console.log(characters)
   })
 })
 
@@ -131,6 +136,12 @@ const gotoChat = (e) => {
 </script>
 
 <style lang="scss" scoped>
+
+@media (min-width: 1780px) { 
+  .xl3grid-cols-9 {
+    grid-template-columns: repeat(9, minmax(0,1fr));
+  }
+}
 .nav-wrapper {
   height: 42px;
   overflow: hidden;
@@ -164,56 +175,73 @@ const gotoChat = (e) => {
   height: 283px;
   overflow: hidden;
   color: #c9c5bf;
-  .role-box {
+}
+.role-box {
+  // display: flex;
+  // flex-wrap: wrap;
+  // box-sizing: border-box;
+  // // overflow-x: scroll;
+  // justify-content: space-between;
+
+  .role-item {
     display: flex;
-    // align-items: center;
-    box-sizing: border-box;
-    overflow-x: scroll;
-
-    .role-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 12rem;
-      // box-sizing: border-box;
-      background-color: #2b2c2d;
-      cursor: pointer;
-      &:hover {
-        background-color: #363838;
-      }
-      &.active {
-        background-color: #0d0d0d;
-      }
-      dl,dt,dd {
-        margin: 0;
-      }
-      dt {
-        font-size: 14px;
-        font-weight: bold;
-        margin-top: 10px;
-      }
-      dd {
-        font-size: 12px;
-        margin-top: 14px;
-        text-align: left;
-        overflow : hidden;
-        height: 40px;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        line-height: 1.6;
-      }
-      & + .role-item {
-        margin-left: 10px;
-      }
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    flex-grow: 0;
+    flex-shrink: 0;
+    background-color: #2b2c2d;
+    cursor: pointer;
+    &:hover {
+      background-color: #363838;
     }
-
+    &.active {
+      background-color: #0d0d0d;
+    }
     .role-avatar {
+      width: 8.5rem;
       aspect-ratio: 1 / 1;
     }
+    dl,dt,dd {
+      margin: 0;
+    }
+    dt {
+      font-size: 14px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    dd {
+      font-size: 12px;
+      margin-top: 14px;
+      text-align: left;
+      overflow : hidden;
+      height: 40px;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      line-height: 1.6;
+    }
+
+    &.mobile {
+      .avatar-box {
+        flex-direction: row;
+        display: flex;
+        width: 100%;
+        text-align: left;
+        .role-avatar {
+          flex: 1;
+          aspect-ratio: 1 / 1.13;
+        }
+
+        dl {
+          flex: 0 0 52%;
+          margin-left: 1rem;
+        }
+      }
+    }
   }
+
 }
 
 .show-wrapper {

@@ -17,10 +17,10 @@
     </section>
   
     <!-- 角色列表 -->
-    <section class="roles-wrapper mt-3">
-      <section class="role-box pb-5">
-        <div @click="gotoChat(item)" class="role-item p-4 rounded-[0.6rem] flex-shrink-0" v-for="(item,index) in characters" :key="index">
-          <img class="role-avatar w-[8.5rem] rounded-[0.6rem]" :src="item.avatar" />
+    <!-- <section class="roles-wrapper mt-3"> -->
+      <section class="role-box grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 2xl:grid-cols-8 xl3grid-cols-9 gap-3 mt-4">
+        <div @click="gotoChat(item)" class="role-item p-4 rounded-[0.6rem]" v-for="(item,index) in characters" :key="index">
+          <div class="role-avatar w-[8.5rem] rounded-[0.6rem]" :style="{'background': 'url('+ item.avatar +') no-repeat center/100%'}"></div>
           <dl>
             <dt>{{item.name}}</dt>
             <dd>{{item.info}}</dd>
@@ -31,7 +31,7 @@
           </p>
         </div>
       </section>
-    </section>
+    <!-- </section> -->
   
     <el-divider />
   
@@ -130,6 +130,12 @@ const gotoChat = (e) => {
 </script>
 
 <style lang="scss" scoped>
+
+@media (min-width: 1780px) { 
+  .xl3grid-cols-9 {
+    grid-template-columns: repeat(9, minmax(0,1fr));
+  }
+}
 .nav-wrapper {
   height: 42px;
   overflow: hidden;
@@ -163,55 +169,58 @@ const gotoChat = (e) => {
   height: 283px;
   overflow: hidden;
   color: #c9c5bf;
-  .role-box {
+}
+.role-box {
+  // display: flex;
+  // flex-wrap: wrap;
+  // box-sizing: border-box;
+  // // overflow-x: scroll;
+  // justify-content: space-between;
+
+  .role-item {
     display: flex;
-    // align-items: center;
-    box-sizing: border-box;
-    overflow-x: scroll;
-
-    .role-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 12rem;
-      // box-sizing: border-box;
-      background-color: #2b2c2d;
-      cursor: pointer;
-      &:hover {
-        background-color: #363838;
-      }
-      &.active {
-        background-color: #0d0d0d;
-      }
-      dl,dt,dd {
-        margin: 0;
-      }
-      dt {
-        font-size: 14px;
-        font-weight: bold;
-        margin-top: 10px;
-      }
-      dd {
-        font-size: 12px;
-        margin-top: 14px;
-        text-align: left;
-        overflow : hidden;
-        height: 40px;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        line-height: 1.6;
-      }
-      & + .role-item {
-        margin-left: 10px;
-      }
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 0;
+    flex-shrink: 0;
+    background-color: #2b2c2d;
+    cursor: pointer;
+    &:hover {
+      background-color: #363838;
     }
-
-    .role-avatar {
-      aspect-ratio: 1 / 1;
+    &.active {
+      background-color: #0d0d0d;
     }
+    dl,dt,dd {
+      margin: 0;
+    }
+    dt {
+      font-size: 14px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    dd {
+      font-size: 12px;
+      margin-top: 14px;
+      text-align: left;
+      overflow : hidden;
+      height: 40px;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      line-height: 1.6;
+      width: 10rem;
+      text-align: center;
+    }
+    // & + .role-item {
+    //   margin-left: 10px;
+    // }
+  }
+
+  .role-avatar {
+    aspect-ratio: 1 / 1;
   }
 }
 

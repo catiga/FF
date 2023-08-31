@@ -16,7 +16,7 @@ watch(() => app.isMobile, (curval) => {
   <section class="header-container flex items-center gap-x-3" style="height: var(--ep-menu-item-height)">
     <img class="w-[12.5rem] border" src="/logo.jpg" alt="vite">
     <div class="flex-grow" />
-    <div class="flex items-center gap-x-3 invisible md:inline-block">
+    <div class="items-center gap-x-3 hidden sm:flex">
       <img class="w-7 block" src="../../assets/images/icon/icon-search.png" alt="">
       <img class="w-7 block" src="../../assets/images/icon/icon-book.png" alt="">
       <img class="w-6 block" src="../../assets/images/icon/icon-question.png" alt="">

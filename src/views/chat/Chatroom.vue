@@ -80,10 +80,13 @@ onMounted(async () => {
             console.log('error:', v)
         }
     })
-    const fp = await FingerprintJS.load();
-    const result = await fp.get();
-    console.log("dev code：", result.visitorId) //1cde4f14791e85cd9765bb45f26a34cc
-    devId = result.visitorId
+    // const fp = await FingerprintJS.load();
+    // const result = await fp.get();
+    // console.log("dev code：", result.visitorId) //1cde4f14791e85cd9765bb45f26a34cc
+    // devId = result.visitorId
+
+    const devprint = localStorage.getItem("__devprint__")
+    devId = devprint
 
     chatHistory(devId, {userid:0, code: route.params.chatid}).then(v => {
         if(v.Code == 0 && v.Data?.length > 0) {
@@ -118,7 +121,10 @@ const chatObj = reactive({
 })
 
 const goBack = () => {
-    router.go(-1)
+    // router.go(-1)
+    router.push({
+        name: 'home',
+     })
 }
 
 //ws

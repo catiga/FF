@@ -1,6 +1,3 @@
-<script setup>
-// import { toggleDark } from "~/composables";
-</script>
 
 <template>
   <section class="header-container flex items-center gap-x-3" style="height: var(--ep-menu-item-height)">
@@ -27,6 +24,22 @@
     </div>
   </section>
 </template>
+
+<script setup>
+import { ref, reactive, onMounted } from 'vue'
+import FingerprintJS from '@fingerprintjs/fingerprintjs';
+
+onMounted(async () => {
+  const devprint = localStorage.getItem("__devprint__")
+  if(!devprint) {
+    const fp = await FingerprintJS.load();
+    const result = await fp.get();
+    console.log("dev code：", result.visitorId) //1cde4f14791e85cd9765bb45f26a34cc
+    const devId = result.visitorId
+    localStorage.setItem("__devprint__", devId)
+  }
+})
+</script>
 
 <style lang="scss" scoped>
 .header-container {

@@ -55,15 +55,6 @@
             <li v-for="(chat, it) in item.samplechats" :key="it">
               "{{chat.q}}"
             </li>
-            <!-- <li>
-              "{{ item.Q }}"
-            </li>
-            <li>
-              "{{ item.A }}"
-            </li>
-            <li>
-              "What do you think about Jeff Bezo's Blue Origin?"
-            </li> -->
           </ul>
         </div>
 

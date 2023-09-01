@@ -1,7 +1,20 @@
 
 <template>
   <section class="header-container flex items-center gap-x-3" style="height: var(--ep-menu-item-height)">
-    <img class="w-[12.5rem] border" src="/logo.jpg" alt="vite" @click="goHome">
+    <!-- 移动端菜单 -->
+    <section class="sm:hidden">
+      <el-icon @click="toggleDrawer" :size="24"><Operation /></el-icon>
+      <section class="mobile-menu" :class="[drawer?'show':'']" @click.capture="drawer = false">
+        <section class="inner">
+          <router-link to="/home" class="memu" index="1"><span class="ml-4">首页</span></router-link>
+          <p>Comeing soon</p>
+          <p>Comeing soon</p>
+          <p>Comeing soon</p>
+          <p>Comeing soon</p>
+        </section>
+      </section>
+    </section>
+    <img class="w-[10rem] sm:w-[12.5rem] border" src="/logo.jpg" alt="vite" @click="goHome">
     <div class="flex-grow" />
 
     <!--
@@ -32,6 +45,10 @@
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
+import {
+  Operation,
+  Right,
+} from "@element-plus/icons-vue";
 import { useRouter, useRoute } from 'vue-router';
 import FingerprintJS from '@fingerprintjs/fingerprintjs';
 
@@ -62,6 +79,11 @@ const goHome = () => {
       name: 'home',
     })
 }
+
+const drawer = ref(false)
+const toggleDrawer = () => {
+  drawer.value = true
+}
 </script>
 
 <style lang="scss" scoped>
@@ -87,5 +109,49 @@ const goHome = () => {
     }
   }
 
+}
+
+.mobile-menu {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 10;
+  transform: translateX(-100%);
+  transition: all .3s;
+  opacity: 0;
+  &.show {
+    transform: translateX(0);
+    background-color: rgba(0,0,0,0.2);
+    opacity: 1;
+  }
+  .inner {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 40%;
+    background-color: rgba(0,0,0,0.95);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    font-style: italic;
+    padding-top: 3rem;
+    a,p {
+      font-size: 1.1rem;
+      text-decoration: none;
+      color: white;
+      line-height: 2;
+      display: block;
+      width: 100%;
+    }
+    p {
+      color: rgba(255,255,255,0.3);
+    }
+
+  }
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
     <BaseHeader />
     <div class="flex main-container">
-      <BaseSide class="flex-shrink-0"/>
+      <BaseSide v-if="!app.isMobile" class="flex-shrink-0"/>
       <article class="main" :class="[app.isMobile ? 'mobile-layout' : 'p-4']">
         <router-view v-slot="{ Component }">
             <transition name="fade" mode="out-in" appear>
@@ -22,7 +22,8 @@ const app = useStore()
     box-sizing: border-box;
     width: calc(100vw - var(--ep-menu-icon-width) - var(--ep-menu-base-level-padding) * 2 );
     &.mobile-layout {
-        padding: 10px 0 0 0;
+        padding: 10px 10px 0;
+        width: 100%;
     }
 }
 .fade-enter-active,

@@ -16,7 +16,7 @@
                 </section>
                 <el-button @click="handleSwitchChat" class="mt-4" type="primary">去对话</el-button>
             </section>
-            <div v-show="!hiddenIntro">
+            <div v-show="!hiddenIntro" style="background-color: rgb(167 111 111 / 0.75);">
                 <section>
                     <p>神职：仙妖</p>
                     <p>姓名：{{charObj.name}}</p>

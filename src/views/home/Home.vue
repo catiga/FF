@@ -100,7 +100,7 @@ const characters = ref([
 const sampleDatas = ref([])
 
 onMounted(() => {
-  navObj.navList = ['特色', '发现', '助手', '名人', '游戏', '图像生成','特色', '发现', '助手', '名人', '游戏', '图像生成','特色', '发现', '助手', '名人', '游戏', '图像生成']
+  navObj.navList = ['姻缘', '事业', '身世', '未来', '神秘', '幻想','灵感', '玄幻', '通灵', '占卜']
 
   characterList("cece").then(v => {
     if(v.Code == 0) {

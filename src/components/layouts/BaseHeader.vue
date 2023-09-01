@@ -1,8 +1,10 @@
 
 <template>
   <section class="header-container flex items-center gap-x-3" style="height: var(--ep-menu-item-height)">
-    <img class="w-[12.5rem] border" src="/logo.jpg" alt="vite">
+    <img class="w-[12.5rem] border" src="/logo.jpg" alt="vite" @click="goHome">
     <div class="flex-grow" />
+
+    <!--
     <div class="items-center gap-x-3 hidden sm:flex">
       <img class="w-7 block" src="../../assets/images/icon/icon-search.png" alt="">
       <img class="w-7 block" src="../../assets/images/icon/icon-book.png" alt="">
@@ -24,11 +26,13 @@
       <el-button type="info">登录</el-button>
       <el-button type="primary">注册</el-button>
     </div>
+    -->
   </section>
 </template>
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router';
 import FingerprintJS from '@fingerprintjs/fingerprintjs';
 
 import { watch } from 'vue';
@@ -37,6 +41,7 @@ import { useStore } from '~/store';
 
 const { isMobile } = useBasicLayout()
 const app = useStore()
+const router = useRouter()
 
 watch(() => app.isMobile, (curval) => {
   app.setIsMobile(curval)
@@ -47,11 +52,16 @@ onMounted(async () => {
   if(!devprint) {
     const fp = await FingerprintJS.load();
     const result = await fp.get();
-    console.log("dev code：", result.visitorId) //1cde4f14791e85cd9765bb45f26a34cc
     const devId = result.visitorId
     localStorage.setItem("__devprint__", devId)
   }
 })
+
+const goHome = () => {
+  router.push({
+      name: 'home',
+    })
+}
 </script>
 
 <style lang="scss" scoped>

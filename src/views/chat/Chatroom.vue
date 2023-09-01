@@ -33,7 +33,7 @@
     
         <!-- 聊天 -->
         <section class="chat-wrapper flex items-start pt-3">
-            <div v-if="!app.isMobile" class="w-[16rem] lg:w-[30rem] rounded-2xl h-full" :style="{'background':`url(${charObj.bodyImg}) no-repeat center / cover`}"></div>
+            <div v-if="!app.isMobile" class="w-[16rem] lg:w-[24rem] rounded-2xl h-full" :style="{'background':`url(${charObj.bodyImg}) no-repeat center / cover`}"></div>
             <div class="w-[16rem] lg:w-[22rem] information" v-if="!app.isMobile">
                 <h2><span class="relative">{{charObj.region}}</span></h2>
                 <section>
@@ -48,7 +48,7 @@
                 </section>
                 <section class="mt-4" v-html="charObj.profile"></section>
             </div>
-            <div v-if="showChat" class="chatroom flex-1 h-full rounded-sm">
+            <div v-if="showChat || !app.isMobile" class="chatroom flex-1 h-full rounded-sm">
                 <div class="chat-content p-4" ref="chatroomContent">
                     <section 
                         v-for="item,index in chatObj.list" 

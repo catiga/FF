@@ -8,23 +8,46 @@
       <img class="w-6 block" src="../../assets/images/icon/icon-home.png" alt="">
       <span>首页</span>
     </router-link>
-    <div class="memu" index="2">
-      <img class="w-5 block" src="../../assets/images/icon/icon-trending.png" alt="">
-      <span>动态</span>
-    </div>
-    <div class="memu">
-      <img class="w-3 block" src="../../assets/images/icon/icon-create.png" alt="">
-      <span>创建</span>
-    </div>
-    <div class="memu">
-      <img class="w-5 block" src="../../assets/images/icon/icon-chat.png" alt="">
-      <span>聊天</span>
-    </div>
-    <div class="memu">
-      <img class="w-5 block" src="../../assets/images/icon/icon-community.png" alt="">
-      <span>社区</span>
-    </div>
-
+    <el-tooltip
+      effect="dark"
+      content="Coming soon"
+      placement="right"
+    >
+      <div class="memu" index="2">
+        <img class="w-5 block" src="../../assets/images/icon/icon-trending.png" alt="">
+        <span>动态</span>
+      </div>
+    </el-tooltip>
+    <el-tooltip
+      effect="dark"
+      content="Coming soon"
+      placement="right"
+    >
+      <div class="memu">
+        <img class="w-3 block" src="../../assets/images/icon/icon-create.png" alt="">
+        <span>创建</span>
+      </div>
+    </el-tooltip>
+    <el-tooltip
+      effect="dark"
+      content="Coming soon"
+      placement="right"
+    >
+      <div class="memu">
+        <img class="w-5 block" src="../../assets/images/icon/icon-chat.png" alt="">
+        <span>聊天</span>
+      </div>
+    </el-tooltip>
+    <el-tooltip
+      effect="dark"
+      content="Coming soon"
+      placement="right"
+    >
+      <div class="memu">
+        <img class="w-5 block" src="../../assets/images/icon/icon-community.png" alt="">
+        <span>社区</span>
+      </div>
+    </el-tooltip>
   </el-menu>
 </template>
 

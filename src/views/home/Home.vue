@@ -53,31 +53,10 @@
           </div>
           <ul>
             <li v-for="(chat, it) in item.samplechats" :key="it">
-              "{{chat.q}}"
+              <p>"{{chat.q}}"</p>
             </li>
           </ul>
         </div>
-
-        <!-- <div class="show-item flex-shrink-0" v-for="item in 8">
-          <div class="avatar flex items-center">
-            <img class="w-12 rounded-md" src="../../assets/images/example/01.png" />
-            <div class="ml-2">
-              <h2>Elon Musk</h2>
-              <h2 class="italic">Try saying:</h2>
-            </div>
-          </div>
-          <ul>
-            <li>
-              "If you could go back in time, when and where would you go?"
-            </li>
-            <li>
-              "Why did you buy Twitter?"
-            </li>
-            <li>
-              "What do you think about Jeff Bezo's Blue Origin?"
-            </li>
-          </ul>
-        </div> -->
       </section>
     </section>
   
@@ -294,17 +273,16 @@ const gotoChat = (e) => {
 
 .show-wrapper {
   color: #AEABA5;
-  height: 240px;
-  overflow: hidden;
   .show-box {
     display: flex;
-    align-items: center;
+    align-items: start;
     box-sizing: border-box;
     overflow-x: scroll;
 
     .show-item {
       width: 270px;
       font-size: 13px;
+      
       & + .show-item {
         margin-left: 18px;
       }
@@ -328,15 +306,18 @@ const gotoChat = (e) => {
         border-radius: 5px;
         margin-top: 10px;
         cursor: pointer;
-        overflow : hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        line-height: 1.4;
-        min-height: 38px;
         &:hover {
           background-color: #363838;
+        }
+        p {
+          overflow : hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          line-height: 1.4;
+          height: 38px;
+          margin: 0;
         }
       }
     }

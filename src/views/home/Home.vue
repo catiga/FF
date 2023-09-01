@@ -43,7 +43,31 @@
     <!-- 对话展示 -->
     <section class="show-wrapper">
       <section class="show-box pb-5">
-        <div class="show-item flex-shrink-0" v-for="item in 8">
+        <div class="show-item flex-shrink-0" v-for="(item, index) in sampleDatas" :key="index">
+          <div class="avatar flex items-center">
+            <img class="w-12 rounded-md" :src="item.char.avatar" />
+            <div class="ml-2">
+              <h2>{{ item.char.name }}</h2>
+              <h2 class="italic">Try saying:</h2>
+            </div>
+          </div>
+          <ul>
+            <li v-for="(chat, it) in item.samplechats" :key="it">
+              "{{chat.q}}"
+            </li>
+            <!-- <li>
+              "{{ item.Q }}"
+            </li>
+            <li>
+              "{{ item.A }}"
+            </li>
+            <li>
+              "What do you think about Jeff Bezo's Blue Origin?"
+            </li> -->
+          </ul>
+        </div>
+
+        <!-- <div class="show-item flex-shrink-0" v-for="item in 8">
           <div class="avatar flex items-center">
             <img class="w-12 rounded-md" src="../../assets/images/example/01.png" />
             <div class="ml-2">
@@ -62,7 +86,7 @@
               "What do you think about Jeff Bezo's Blue Origin?"
             </li>
           </ul>
-        </div>
+        </div> -->
       </section>
     </section>
   
@@ -80,7 +104,8 @@
 
 <script setup>
 import {
-    characterList
+    characterList,
+    chatSample
 } from "~/api/index";
 import { reactive, onMounted, ref, } from "vue";
 import { useRouter } from 'vue-router';
@@ -102,12 +127,44 @@ const characters = ref([
   }
 ])
 
+const sampleDatas = ref([])
+
 onMounted(() => {
   navObj.navList = ['特色', '发现', '助手', '名人', '游戏', '图像生成','特色', '发现', '助手', '名人', '游戏', '图像生成','特色', '发现', '助手', '名人', '游戏', '图像生成']
 
   characterList("cece").then(v => {
-    characters.value.splice(1, v.Data?.length, ...v.Data)
+    if(v.Code == 0) {
+      characters.value.splice(1, v.Data?.length, ...v.Data)
+    }
   })
+
+  let samTs = setTimeout(() => {
+    if(characters.value?.length > 0) {
+      console.log('角色数据：', characters.value)
+      clearTimeout(samTs)
+      chatSample().then(v => {
+        if(v.Code == 0 && v.Data?.length > 0) {
+          // sampleDatas.value.splice(0, sampleDatas.value.length, ...v.Data)
+          for(let e of characters.value) {
+            let sampleData = {
+              char: e,
+              samplechats: [],
+            }
+            for(let d of v.Data) {
+              if(sampleData.char.id == d.charid) {
+                sampleData.samplechats.push({q: d.Q, a: d.A})
+              }
+            }
+            if(sampleData.samplechats.length > 0) {
+              sampleDatas.value.push(sampleData)
+            }
+          }
+
+        }
+      })
+    }
+  }, 500);
+  
 })
 
 const checkIndex = ref(0)

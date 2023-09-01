@@ -120,7 +120,7 @@ onMounted(() => {
             }
             for(let d of v.Data) {
               if(sampleData.char.id == d.charid) {
-                sampleData.samplechats.push({q: d.Q, a: d.A, id:d.Id})
+                sampleData.samplechats.push({q: d.Q, a: d.A, id:d.id})
               }
             }
             if(sampleData.samplechats.length > 0) {
@@ -157,7 +157,7 @@ const gotoChat = (e) => {
 }
 
 const handleChatSam = (character, chat) => {
-  console.log(character, chat)
+  console.log(character, chat, "有没有", chat.id)
   router.push({
     name:'chat',
     params: {

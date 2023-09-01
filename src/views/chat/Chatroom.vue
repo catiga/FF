@@ -78,7 +78,8 @@
 <script setup>
 import {
     characterByCode,
-    chatHistory
+    chatHistory,
+    chatSample
 } from "~/api/index";
 import {
     SpwsClient
@@ -99,34 +100,10 @@ const sending = ref(false)
 const charObj = ref({})
 let devId = ''
 
-let sampleChat = window.history.state.sample;
-console.log("sampleChat:::", sampleChat)
+let sampleid = route.params.sampleid;
+let chatid = route.params.chatid
 
-onMounted(async () => {
-    characterByCode(route.params.chatid).then(v => {
-        if(v.Code==0) {
-            charObj.value = v.Data
-        } else {
-            console.log('error:', v)
-        }
-    })
-    const devprint = localStorage.getItem("__devprint__")
-    devId = devprint
-
-    chatHistory(devId, {userid:0, code: route.params.chatid}).then(v => {
-        if(v.Code == 0 && v.Data?.length > 0) {
-            chatObj.list.splice(0, chatObj.list.length, ...[])
-            for(let e of v.Data) {
-                chatObj.list.push({
-                    id: e.id,
-                    timestamp: e.time,
-                    content: e.content,
-                    isMe : (e.direction == '1' ? true : false),
-                })
-            }
-        }
-    })
-})
+let hisRecordMark = false
 
 const chatObj = reactive({
     list: [
@@ -143,6 +120,55 @@ const chatObj = reactive({
             isMe: false,
         },
     ]
+})
+
+onMounted(async () => {
+    characterByCode(chatid).then(v => {
+        if(v.Code==0) {
+            charObj.value = v.Data
+        } else {
+            console.log('error:', v)
+        }
+    })
+    const devprint = localStorage.getItem("__devprint__")
+    devId = devprint
+
+    chatHistory(devId, {userid:0, code: chatid}).then(v => {
+        if(v.Code == 0) {
+            if(v.Data?.length > 0) {
+                chatObj.list.splice(0, chatObj.list.length, ...[])
+                for(let e of v.Data) {
+                    chatObj.list.push({
+                        id: e.id,
+                        timestamp: e.time,
+                        content: e.content,
+                        isMe : (e.direction == '1' ? true : false),
+                    })
+                }
+            }
+        }
+        hisRecordMark = true
+    })
+
+    if(sampleid) {
+        chatSample({id: sampleid}).then(v => {
+            if(v.Code==0 && v.Data) {
+                let ts = setTimeout(() => {
+                    if(hisRecordMark) {
+                        clearTimeout(ts)
+                        chatObj.list.push({
+                            content: v.Data.Q,
+                            isMe: true
+                        })
+                        chatObj.list.push({
+                            content: v.Data.A,
+                            isMe: false
+                        })
+                    }
+                }, 50)
+            }
+        })
+    }
 })
 
 const goBack = () => {

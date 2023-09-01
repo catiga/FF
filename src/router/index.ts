@@ -14,7 +14,7 @@ let routes = [
         component: () => import("~/views/home/Home.vue"),
       },
       {
-        path: '/chat/:chatid',
+        path: '/chat/:chatid/:sampleid?',
         name: 'chat',
         component: () => import("~/views/chat/Chatroom.vue"),
       },

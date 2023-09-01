@@ -52,7 +52,7 @@
             </div>
           </div>
           <ul>
-            <li v-for="(chat, it) in item.samplechats" :key="it">
+            <li v-for="(chat, it) in item.samplechats" :key="it" @click="handleChatSam(item.char, chat)">
               <p>"{{chat.q}}"</p>
             </li>
           </ul>
@@ -75,7 +75,7 @@
 <script setup>
 import {
     characterList,
-    chatSample
+    chatSamples
 } from "~/api/index";
 import { reactive, onMounted, ref, } from "vue";
 import { useRouter } from 'vue-router';
@@ -110,11 +110,9 @@ onMounted(() => {
 
   let samTs = setTimeout(() => {
     if(characters.value?.length > 0) {
-      console.log('角色数据：', characters.value)
       clearTimeout(samTs)
-      chatSample().then(v => {
+      chatSamples().then(v => {
         if(v.Code == 0 && v.Data?.length > 0) {
-          // sampleDatas.value.splice(0, sampleDatas.value.length, ...v.Data)
           for(let e of characters.value) {
             let sampleData = {
               char: e,
@@ -122,7 +120,7 @@ onMounted(() => {
             }
             for(let d of v.Data) {
               if(sampleData.char.id == d.charid) {
-                sampleData.samplechats.push({q: d.Q, a: d.A})
+                sampleData.samplechats.push({q: d.Q, a: d.A, id:d.Id})
               }
             }
             if(sampleData.samplechats.length > 0) {
@@ -158,8 +156,16 @@ const gotoChat = (e) => {
   })
 }
 
-
-
+const handleChatSam = (character, chat) => {
+  console.log(character, chat)
+  router.push({
+    name:'chat',
+    params: {
+      chatid: character.code,
+      sampleid: chat.id,
+    },
+  })
+}
 </script>
 
 <style lang="scss" scoped>

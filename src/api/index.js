@@ -40,6 +40,18 @@ export function chatHistory(devId, data) {
   });
 }
 
+export function chatSamples(data) {
+  return service({
+    url: "/spwapi/user/samplechats",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      "lan": lanEnv,
+    },
+    method: "post",
+    data: qs.stringify(data),
+  });
+}
+
 export function chatSample(data) {
   return service({
     url: "/spwapi/user/samplechat",

@@ -99,6 +99,9 @@ const sending = ref(false)
 const charObj = ref({})
 let devId = ''
 
+let sampleChat = window.history.state.sample;
+console.log("sampleChat:::", sampleChat)
+
 onMounted(async () => {
     characterByCode(route.params.chatid).then(v => {
         if(v.Code==0) {

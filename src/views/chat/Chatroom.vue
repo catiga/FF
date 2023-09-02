@@ -56,7 +56,7 @@
                         :class="['chat-item', 'flex', item.isMe ? 'flex-row-reverse items-start' : 'items-end']"
                     >
                         <img v-if="!item.isMe" class="rounded-full flex-shrink-0 w-[4.6rem] block" :src="charObj.avatar" />
-                        <p :class="['chat-v', item.isMe ? 'right' : 'left']">{{ item.content }}</p>
+                        <p :class="['chat-v', item.isMe ? 'right' : 'left']" v-html="item.content"></p>
                     </section>
                 </div>
                 <div class="m-4">
@@ -338,6 +338,7 @@ const goBack = () => {
                 }
             }
             .chat-v {
+                white-space: pre-wrap;
                 font-size: 14px;
                 max-width: 80%;
                 padding: 8px 8px;

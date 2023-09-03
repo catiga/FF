@@ -3,15 +3,15 @@ import qs from 'qs';
 
 const lanEnv = 'zh-CN'
 
-export function characterList(data) {
+export function characterList(ct, cv) {
     return service({
-      url: "/spwapi/user/character",
+      url: "/spwapi/user/characters",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
         "lan": lanEnv,
       },
-      method: "get",
-      data: qs.stringify({lan: lanEnv}),
+      method: "post",
+      data: qs.stringify({ct:ct, cv:cv, lan: lanEnv}),
     });
 }
 
@@ -61,5 +61,28 @@ export function chatSample(data) {
     },
     method: "post",
     data: qs.stringify(data),
+  });
+}
+
+export function sysCatalogs(pid) {
+  return service({
+    url: "/spwapi/sys/catags",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      "lan": lanEnv,
+    },
+    method: "post",
+    data: qs.stringify({pid:pid}),
+  });
+}
+
+export function sysMethods() {
+  return service({
+    url: "/spwapi/sys/artags",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      "lan": lanEnv,
+    },
+    method: "post",
   });
 }

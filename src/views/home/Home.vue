@@ -7,10 +7,10 @@
           <el-button 
             @click="handleCheckNav(index)" 
             type="info" 
-            v-for="item,index in navObj.navList" 
+            v-for="item,index in navObj.martsList" 
             :key="index"
             :class="[checkIndex == index ? 'active' : '']"
-          >{{ item }}</el-button>
+          >{{ item.name }}</el-button>
         </nav>
       </section>
       <i @click="handleScroll" class="flex-inline ml-4 text-xs cursor-pointer" i="ep-arrow-right-bold"></i>
@@ -63,9 +63,9 @@
     <!-- 分类 -->
     <section class="flex flex-col items-center py-8">
       <section class="type-wapper grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-        <section class="type-item flex items-center p-1" v-for="item in 9">
+        <section class="type-item flex items-center p-1" v-for="(item, index) in navObj.navList" :key="index" @click="handleCatalog(item)">
           <img class="w-8 block rounded-sm" src="../../assets/images/example/02.png" />
-          <p class="ml-2 my-0">Brainstorm ideas</p>
+          <p class="ml-2 my-0">{{ item.name }}</p>
         </section>
       </section>
     </section>
@@ -75,7 +75,9 @@
 <script setup>
 import {
     characterList,
-    chatSamples
+    chatSamples,
+    sysCatalogs,
+    sysMethods,
 } from "~/api/index";
 import { reactive, onMounted, ref, } from "vue";
 import { useRouter } from 'vue-router';
@@ -83,7 +85,7 @@ import { useStore } from '~/store';
 import AssistantImg from '~/assets/images/assistant.jpg';
 const app = useStore()
 
-const navObj = reactive({navList: []})
+const navObj = reactive({navList: [], martsList: []})
 const nav = ref(null)
 const router = useRouter()
 const characters = ref([
@@ -100,11 +102,28 @@ const characters = ref([
 const sampleDatas = ref([])
 
 onMounted(() => {
-  navObj.navList = ['姻缘', '事业', '身世', '未来', '神秘', '幻想','灵感', '玄幻', '通灵', '占卜']
+  // navObj.navList = ['姻缘', '事业', '身世', '未来', '神秘', '幻想','灵感', '玄幻', '通灵', '占卜']
 
-  characterList("cece").then(v => {
+  characterList().then(v => {
     if(v.Code == 0) {
       characters.value.splice(1, v.Data?.length, ...v.Data)
+    }
+  })
+
+  sysCatalogs(0).then(v => {
+    if(v.Code == 0) {
+      if(!v.Data) {
+        v.Data = []
+      }
+      navObj.navList.splice(0, navObj.navList.length, ...v.Data)
+    }
+  })
+  sysMethods().then(v => {
+    if(v.Code == 0) {
+      if(!v.Data) {
+        v.Data = []
+      }
+      navObj.martsList.splice(0, navObj.martsList.length, ...v.Data)
     }
   })
 
@@ -157,13 +176,27 @@ const gotoChat = (e) => {
 }
 
 const handleChatSam = (character, chat) => {
-  console.log(character, chat, "有没有", chat.id)
   router.push({
     name:'chat',
     params: {
       chatid: character.code,
       sampleid: chat.id,
     },
+  })
+}
+
+const handleCatalog = (item) => {
+  let level = "1"
+  if(item.pid==0) {
+    level = "0"
+  }
+  characterList(level, item.code).then(v => {
+    if(v.Code == 0) {
+      if(!v.Data) {
+        v.Data = []
+      }
+      characters.value.splice(1, characters.value.length, ...v.Data)
+    }
   })
 }
 </script>

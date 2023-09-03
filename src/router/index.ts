@@ -20,6 +20,10 @@ let routes = [
       },
     ]
   },
+  {
+    path: "/login",
+    component: () => import("~/views/login/Login.vue"),
+  },
 ];
 
 // 3. 创建路由实例并传递 `routes` 配置

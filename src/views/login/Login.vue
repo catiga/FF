@@ -20,7 +20,7 @@
                     status-icon
                     :rules="rules"
                     label-width="0px"
-                    class="login-form w-full sm:w-80 mx-auto"
+                    class="login-form w-72 sm:w-80 mx-auto"
                   >
                     <el-form-item prop="name" key="name">
                       <el-input v-model="loginForm.name" type="password" autocomplete="off" placeholder="Name" />
@@ -51,7 +51,7 @@
                     status-icon
                     :rules="rules"
                     label-width="0px"
-                    class="login-form w-full sm:w-80 mx-auto"
+                    class="login-form w-72 sm:w-80 mx-auto"
                   >
                     <el-form-item prop="name" key="name">
                       <el-input v-model="registerForm.name" type="password" autocomplete="off" placeholder="Name" />

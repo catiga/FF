@@ -17,11 +17,12 @@
     <img class="w-[10rem] sm:w-[12.5rem] border" src="/logo.jpg" alt="vite" @click="goHome">
     <div class="flex-grow" />
 
-    <!--
+    
     <div class="items-center gap-x-3 hidden sm:flex">
       <img class="w-7 block" src="../../assets/images/icon/icon-search.png" alt="">
       <img class="w-7 block" src="../../assets/images/icon/icon-book.png" alt="">
       <img class="w-6 block" src="../../assets/images/icon/icon-question.png" alt="">
+      <!--
       <el-dropdown cursor-pointer>
         <span class="el-dropdown-link">
           中文
@@ -34,12 +35,12 @@
           </el-dropdown-menu>
         </template>
       </el-dropdown>
+      -->
     </div>
     <div>
-      <el-button type="info">登录</el-button>
-      <el-button type="primary">注册</el-button>
+      <el-button type="info" @click="handleLogin">登录</el-button>
+      <!-- <el-button type="primary" @click="handleRegister">注册</el-button> -->
     </div>
-    -->
   </section>
 </template>
 
@@ -78,6 +79,12 @@ const goHome = () => {
   router.push({
       name: 'home',
     })
+}
+
+const handleLogin = () => {
+  router.push({
+    path : "/login"
+  })
 }
 
 const drawer = ref(false)
